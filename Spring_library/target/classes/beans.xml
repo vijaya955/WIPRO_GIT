@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <aop:config>
+        <aop:aspect ref="libraryAspect">
+
+            <aop:before method="logBefore" pointcut="execution(* com.aop.LibraryService.*(..))"/>
+            <aop:after-returning method="logAfterReturning" pointcut="execution(* com.aop.LibraryService.borrowBook(..))"/>
+            <aop:after-throwing method="logAfterThrowing" pointcut="execution(* com.aop.LibraryService.returnBook(..))" throwing="ex"/>
+            <aop:after method="logAfterFinally" pointcut="execution(* com.aop.LibraryService.*(..))"/>
+
+        </aop:aspect>
+    </aop:config>
+
+    <bean id="libraryService" class="com.aop.LibraryService"/>
+    <bean id="libraryAspect" class="com.aop.LibraryAspect"/>
+
+</beans>
